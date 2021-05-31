@@ -19,13 +19,20 @@ const erase = () => {
     return (
       <>
       {FAVS.characters.favorites ? (
+
         <div className={styles.container}>
             <h2>Favoritos</h2>
-            {FAVS.characters.favorites.map((point,i) => {
-              return (
-                <Card name={point.name} image={point.image} hide key={i} />
-              )
-            })}
+            <div className={styles.cardContent}>
+              {FAVS.characters.favorites.map((point,i) => {
+                return (
+                  <Card
+                    name={point.name}
+                    image={point.image}
+                    hide
+                    key={i} />
+                )
+              })}
+            </div>
             <button onClick={erase}> borrar todo </button>
         </div>
       ):(
