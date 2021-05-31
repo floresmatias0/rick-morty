@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/rick-morty/static/css/main.18a9be5a.chunk.css",
+    "main.js": "/rick-morty/static/js/main.26b9e862.chunk.js",
+    "main.js.map": "/rick-morty/static/js/main.26b9e862.chunk.js.map",
+    "runtime-main.js": "/rick-morty/static/js/runtime-main.65ad5b5d.js",
+    "runtime-main.js.map": "/rick-morty/static/js/runtime-main.65ad5b5d.js.map",
+    "static/css/2.9a6475f2.chunk.css": "/rick-morty/static/css/2.9a6475f2.chunk.css",
+    "static/js/2.7a2887b8.chunk.js": "/rick-morty/static/js/2.7a2887b8.chunk.js",
+    "static/js/2.7a2887b8.chunk.js.map": "/rick-morty/static/js/2.7a2887b8.chunk.js.map",
+    "index.html": "/rick-morty/index.html",
+    "precache-manifest.2d2e281397c60ea5ba5f347261b81e15.js": "/rick-morty/precache-manifest.2d2e281397c60ea5ba5f347261b81e15.js",
+    "service-worker.js": "/rick-morty/service-worker.js",
+    "static/css/2.9a6475f2.chunk.css.map": "/rick-morty/static/css/2.9a6475f2.chunk.css.map",
+    "static/css/main.18a9be5a.chunk.css.map": "/rick-morty/static/css/main.18a9be5a.chunk.css.map",
+    "static/js/2.7a2887b8.chunk.js.LICENSE": "/rick-morty/static/js/2.7a2887b8.chunk.js.LICENSE",
+    "static/media/font-awesome.css": "/rick-morty/static/media/fontawesome-webfont.fee66e71.woff",
+    "static/media/spinner.gif": "/rick-morty/static/media/spinner.321c9524.gif"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.65ad5b5d.js",
+    "static/css/2.9a6475f2.chunk.css",
+    "static/js/2.7a2887b8.chunk.js",
+    "static/css/main.18a9be5a.chunk.css",
+    "static/js/main.26b9e862.chunk.js"
+  ]
+}
