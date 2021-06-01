@@ -6,7 +6,9 @@ import { connect } from 'react-redux';
 import { db } from '../../firebase';
 import { changeFavsRedux } from '../../redux/charsDuck';
 import firebase from 'firebase/app'
-import 'firebase/firestore'
+import 'firebase/firestore';
+import Swal from 'sweetalert2';
+import loading from '../../assets/images/spinner.gif'
 
 let rick = "https://rickandmortyapi.com/api/character/avatar/1.jpeg";
 
@@ -14,7 +16,7 @@ function onClick(side) {
     return () => console.log(side)
 }
 
-const Card = ({ name, image, rightClick, leftClick, hide, FAVS, changeFavsRedux }) => {
+const Card = ({ name, image, rightClick, leftClick, hide, FAVS, changeFavsRedux,CHARS }) => {
 
   let idUser = JSON.parse(localStorage.getItem('user'))
 
@@ -28,11 +30,27 @@ const Card = ({ name, image, rightClick, leftClick, hide, FAVS, changeFavsRedux 
         for(let i = 0; i < arr.length; i++){
           for(let j = 0; j < FAVS.length; j++){
             if(arr[i].name === name && FAVS[i].name === name){
-              let newFav = FAVS.filter(point => point.name !== name)
-              db.doc(uid).update({
-                array: newFav
+              Swal.fire({
+                title: '¿Estas seguro que lo queres borrar?',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: `Si`,
+                denyButtonText: `No`,
+              }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                  Swal.fire('borrado!', '', 'success')
+
+                  let newFav = FAVS.filter(point => point.name !== name)
+                  db.doc(uid).update({
+                    array: newFav
+                  })
+                  changeFavsRedux(newFav)
+
+                } else if (result.isDenied) {
+                  Swal.fire('bien pensado!', '', 'info')
+                }
               })
-              changeFavsRedux(newFav)
             }
           }
         }
@@ -41,9 +59,16 @@ const Card = ({ name, image, rightClick, leftClick, hide, FAVS, changeFavsRedux 
   }
 
     return (
+      <>
+      {CHARS && CHARS.loadingChars ? (
+        <>
+        {!hide && <>
+          <p className={styles.number}>Pagina:{CHARS.nextPage - 1}</p>
+          <p className={styles.number}>Personaje nº: {CHARS.array.length}</p>
+        </>}
         <div className={styles.container}>
             <div className={styles.card}>
-                <button onClick={()=> deleteFav(name)}>x</button>
+                {hide && <button className={styles.deleteOne} onClick={()=> deleteFav(name)}>x</button>}
                 <img alt="character" src={image} />
                 <p className={styles.name}>
                     {name}
@@ -68,6 +93,11 @@ const Card = ({ name, image, rightClick, leftClick, hide, FAVS, changeFavsRedux 
             </div>}
             </div>
         </div>
+        </>
+      ): (
+        <img src={loading} alt="loading..."/>
+      )}
+      </>
     )
 }
 
@@ -85,7 +115,8 @@ Card.defaultProps = {
 
 const mapStateToProps = (state) => {
   return {
-    FAVS: state.characters.favorites
+    FAVS: state.characters.favorites,
+    CHARS: state.characters
   }
 }
 

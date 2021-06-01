@@ -39,6 +39,7 @@ let query = gql`
   query ($page:Int){
     characters(page:$page){
       info{
+        count
         pages
         next
         prev
@@ -46,6 +47,7 @@ let query = gql`
       results{
         name
         image
+        id
       }
     }
   }
@@ -171,7 +173,7 @@ export const removeCharacter = () => {
     //getState te trae todo el store del combineReducers
     let { array } = getState().characters;
     array.shift()
-    if(array.length === 0){
+    if(!array.length){
       getCharactersGraphQL()(dispatch,getState)
       return
     }

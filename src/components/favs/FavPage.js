@@ -3,17 +3,33 @@ import styles from './favs.module.css';
 import Card from '../card/Card';
 import { connect } from 'react-redux';
 import { changeFavsRedux } from '../../redux/charsDuck';
+import Swal from 'sweetalert2'
 
 const FavPage = ({ FAVS,changeFavsRedux }) => {
 
 const erase = () => {
   if(FAVS && FAVS.characters && FAVS.characters.favorites){
-    let arrRedux = FAVS.characters.favorites
-    let filtrado = arrRedux.filter(point => point.length === 0)
-    changeFavsRedux(filtrado)
+    Swal.fire({
+      title: 'Vas a borrar a todos tus favoritos, ¿estas seguro?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: `Si`,
+      denyButtonText: `No`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire('se borraron todos!', '', 'success')
+
+        let arrRedux = FAVS.characters.favorites
+        let filtrado = arrRedux.filter(point => point.length === 0)
+        changeFavsRedux(filtrado)
+
+      } else if (result.isDenied) {
+        Swal.fire('bien pensado!', '', 'info')
+      }
+    })
   }
 }
-
     return (
       <>
       {FAVS.characters.favorites.length > 0 ? (
@@ -31,7 +47,7 @@ const erase = () => {
                 )
               })}
             </div>
-            <button onClick={erase}> borrar todo </button>
+            <button className={styles.buttonDelete} onClick={erase}> borrar todo </button>
         </div>
       ):(
         <div className={styles.container}>
