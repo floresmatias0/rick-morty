@@ -22,6 +22,8 @@ import 'firebase/firestore'
   export const getFavs = (id) => {
     return db.doc(id).get()
         .then(snap => {
+          let dataFire = snap.data()
+          console.log("FIREBASE",dataFire)
           return snap.data().array
         })
   }

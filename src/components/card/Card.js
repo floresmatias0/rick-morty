@@ -1,25 +1,45 @@
-import React from 'react'
-import styles from './card.module.css'
-import FontAwesome from 'react-fontawesome'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import React from 'react';
+import styles from './card.module.css';
+import FontAwesome from 'react-fontawesome';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { db } from '../../firebase';
+import { changeFavsRedux } from '../../redux/charsDuck';
+import firebase from 'firebase/app'
+import 'firebase/firestore'
 
-let rick = "https://rickandmortyapi.com/api/character/avatar/1.jpeg"
+let rick = "https://rickandmortyapi.com/api/character/avatar/1.jpeg";
 
 function onClick(side) {
     return () => console.log(side)
 }
 
-const Card = ({ name, image, rightClick, leftClick, hide, FAVS }) => {
+const Card = ({ name, image, rightClick, leftClick, hide, FAVS, changeFavsRedux }) => {
+
+  let idUser = JSON.parse(localStorage.getItem('user'))
 
   const deleteFav = (name) => {
-    console.log(name)
-    for(let i = 0; i < FAVS.length; i++){
-      if(FAVS[i].name === name){
-          console.log(FAVS[i].name)
-      }
+
+    if(idUser && idUser.user && idUser.user.id){
+      var uid = idUser.user.id
+      db.doc(uid).get()
+      .then(snap => {
+        let arr = snap.data().array
+        for(let i = 0; i < arr.length; i++){
+          for(let j = 0; j < FAVS.length; j++){
+            if(arr[i].name === name && FAVS[i].name === name){
+              let newFav = FAVS.filter(point => point.name !== name)
+              db.doc(uid).update({
+                array: newFav
+              })
+              changeFavsRedux(newFav)
+            }
+          }
+        }
+      })
     }
   }
+
     return (
         <div className={styles.container}>
             <div className={styles.card}>
@@ -69,4 +89,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(Card);
+export default connect(mapStateToProps,{changeFavsRedux})(Card);

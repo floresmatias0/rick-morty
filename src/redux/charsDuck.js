@@ -25,6 +25,8 @@ let GET_FAVORITES_DB = "GET_FAVORITES_DB";
 let GET_FAVORITES_DB_SUCCESS = "GET_FAVORITES_DB_SUCCESS";
 let GET_FAVORITES_DB_FAILURE = "GET_FAVORITES_DB_FAILURE";
 
+let GET_FAVORITES = "GET_FAVORITES";
+
 let UPDATE_PAGE = "UPDATE_PAGE";
 
 let URL = "https://rickandmortyapi.com/api/character"
@@ -99,6 +101,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         nextPage: action.payload
+      }
+    case GET_FAVORITES:
+      return {
+        ...state,
+        favorites: action.payload
       }
     default:
       return state;
@@ -217,6 +224,16 @@ export const retrieveFavs = () => {
           payload: err.message
         })
       })
+  }
+}
+
+export const changeFavsRedux = (favs) => {
+  return (dispatch,getState) => {
+    dispatch({
+      type: GET_FAVORITES,
+      payload: favs
+    })
+    saveStorage(getState())
   }
 }
 
