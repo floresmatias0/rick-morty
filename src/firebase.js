@@ -15,7 +15,7 @@ import 'firebase/firestore'
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
-  //firebase.analytics();
+
   //llamamos a la base de datos firestore
   export const db = firebase.firestore().collection('favs')
 
@@ -45,11 +45,6 @@ import 'firebase/firestore'
     return firebase.auth()
     .signInWithPopup(provider)
     .then((result) => {
-      /** @type {firebase.auth.OAuthCredential} */
-      //var credential = result.credential;
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      //var token = credential.accessToken;
-      // The signed-in user info.
       let user = {
         id: result.user.uid,
         name: result.user.displayName,
@@ -60,14 +55,7 @@ import 'firebase/firestore'
       console.log("USUARIO:",user)
       return user
     }).catch((error) => {
-      // Handle Errors here.
-      //var errorCode = error.code;
       let errorMessage = error.message;
-      // The email of the user's account used.
-      //var email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      //var credential = error.credential;
-      // ...
       console.log("ERROR:",errorMessage)
       return errorMessage
     });

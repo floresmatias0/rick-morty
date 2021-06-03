@@ -189,14 +189,18 @@ export const addToFavorites = () => {
   return (dispatch,getState) => {
     let { array,favorites } = getState().characters
     let char = array.shift()
-    favorites.push(char)
-    let { id } = getState().user
-    updateDB(favorites,id)
-    localStorage.setItem('user',JSON.stringify(getState()))
-    dispatch({
-      type: ADD_TO_FAVORITES,
-      payload: { array: [...array], favorites: [...favorites]}
-    })
+    // for(let i = 0; i < favorites.length; i++){
+    //   if(char.name !== favorites[i].name){
+        favorites.push(char)
+        let { id } = getState().user
+        updateDB(favorites,id)
+        localStorage.setItem('user',JSON.stringify(getState()))
+        dispatch({
+          type: ADD_TO_FAVORITES,
+          payload: { array: [...array], favorites: [...favorites]}
+        })
+    //   }
+    // }
   }
 }
 //auxiliar

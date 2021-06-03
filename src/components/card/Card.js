@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { db } from '../../firebase';
 import { changeFavsRedux } from '../../redux/charsDuck';
-import firebase from 'firebase/app'
 import 'firebase/firestore';
 import Swal from 'sweetalert2';
 import loading from '../../assets/images/spinner.gif'
